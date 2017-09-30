@@ -16,7 +16,7 @@ if cache.exists():
         known_face_dictionary = dict(map(lambda item: (item[0], np.array(item[1])), data.items()))
         print("Loaded from cache")
 
-
+badPics = open('badPics.txt', 'w+')
 
 known_pictures_dir = "known_pictures"
 if not known_face_dictionary: # if empty
@@ -26,8 +26,12 @@ if not known_face_dictionary: # if empty
             continue
         face_name = filename.replace(".jpg", "")
         face_image = face_recognition.load_image_file(known_pictures_dir + "/" + filename)
-        known_face_dictionary[face_name] = face_recognition.face_encodings(face_image)[0] # Only get the first face
-
+        try:
+            known_face_dictionary[face_name] = face_recognition.face_encodings(face_image)[0] # Only get the first face
+        except Exception as e:
+            print (e)
+            badPics.write(face_name + "\n")
+            badPics.flush()
 
 unknown_pictures_dir = "unknown_pictures"
 unknown_face_dictionary = {}
