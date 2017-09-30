@@ -65,7 +65,6 @@ for unknown_face in unknown_face_dictionary.keys():
     normed_res = {}
     for index in positive_result_indicies:
         normed_res[known_face_names[index]]=softmax(result_distances[index], recip_sum)
-        print(result_distances[index])
 
     if normed_res:
         print(json.dumps(normed_res))
