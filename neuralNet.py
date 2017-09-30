@@ -17,9 +17,10 @@ def softmax(score, denom):
 # start = current_milli_time()
 
 known_face_dictionary = {}
-cache = Path("cache.txt")  # Load from cache if it's there
+cacheFile = "actorsDict.txt"
+cache = Path(cacheFile)  # Load from cache if it's there
 if cache.exists():
-    with open('cache.txt') as file:
+    with open(cacheFile) as file:
         data = json.load(file)
         known_face_dictionary = dict(map(lambda item: (item[0], np.array(item[1])), data.items()))
         # print("Loaded from cache")
@@ -64,6 +65,6 @@ for unknown_face in unknown_face_dictionary.keys():
 
 
 # Write to cache
-with open('cache.txt', 'w') as file:
+with open(cacheFile, 'w') as file:
     file.write(json.dumps(dict(map(lambda item: (item[0], item[1].tolist()), known_face_dictionary.items()))))
 
